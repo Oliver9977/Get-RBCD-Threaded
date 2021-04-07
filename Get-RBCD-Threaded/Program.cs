@@ -124,6 +124,7 @@ namespace Get_RBCD
 
                 DirectoryEntry deRoot = new DirectoryEntry("LDAP://" + currentDomain + "/RootDSE");
                 ldapConnect = "LDAP://" + deRoot.Properties["defaultNamingContext"].Value.ToString();
+                Console.WriteLine("Connection String should be: " + ldapConnect);
                 
 
                 // Authenticate the user
@@ -478,7 +479,7 @@ namespace Get_RBCD
                 {
                     string sid = null;
                     sid = adRule.IdentityReference.ToString();
-
+                    
                     string hostname = null;
                     try
                     {
@@ -493,8 +494,10 @@ namespace Get_RBCD
                         hostname = Object["samaccountname"][0].ToString();
                     }
 
+                    
                     if (adRule.ActiveDirectoryRights == ActiveDirectoryRights.GenericAll)
                     {
+                        //Console.WriteLine("Case 1: " + sid);
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
@@ -504,6 +507,7 @@ namespace Get_RBCD
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("GenericWrite"))
                     {
+                        //Console.WriteLine("Case 2: " + sid);
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
@@ -512,6 +516,7 @@ namespace Get_RBCD
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteOwner"))
                     {
+                        //Console.WriteLine("Case 3: " + sid);
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
@@ -520,6 +525,7 @@ namespace Get_RBCD
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteDacl"))
                     {
+                        //Console.WriteLine("Case 4: " + sid);
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
@@ -528,8 +534,11 @@ namespace Get_RBCD
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteProp"))
                     {
-                        if (adRule.ObjectType.ToString().Contains("3f78c3e5-f79a-46bd-a0b8-9d18116ddc79"))
+                        //Console.WriteLine("Case 5: " + sid);
+                        //Console.WriteLine("adRule.ObjectType.ToString() is " + adRule.ObjectType.ToString());
+                        if (adRule.ObjectType.ToString().Contains("3f78c3e5-f79a-46bd-a0b8-9d18116ddc79") || adRule.ObjectType.ToString().Contains("00000000-0000-0000-0000-000000000000"))
                         {
+                            //Console.WriteLine("Case 5 inner: " + sid);
                             if (allSids.Contains(sid) && sid != computerSid)
                             {
                                 var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
