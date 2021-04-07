@@ -122,6 +122,10 @@ namespace Get_RBCD
                     Console.WriteLine(ldapConnect);
                 }
 
+                DirectoryEntry deRoot = new DirectoryEntry("LDAP://" + currentDomain + "/RootDSE");
+                ldapConnect = "LDAP://" + deRoot.Properties["defaultNamingContext"].Value.ToString();
+                
+
                 // Authenticate the user
                 if (username != null && password != null)
                 {
