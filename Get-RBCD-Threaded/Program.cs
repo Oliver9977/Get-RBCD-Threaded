@@ -511,7 +511,7 @@ namespace Get_RBCD
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
-                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, "GenericWrite"));
+                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, adRule.ActiveDirectoryRights.ToString()));
                         }
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteOwner"))
@@ -520,7 +520,7 @@ namespace Get_RBCD
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
-                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, "WriteOwner"));
+                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, adRule.ActiveDirectoryRights.ToString()));
                         }
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteDacl"))
@@ -529,7 +529,7 @@ namespace Get_RBCD
                         if (allSids.Contains(sid) && sid != computerSid)
                         {
                             var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
-                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, "WriteDacl"));
+                            rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, adRule.ActiveDirectoryRights.ToString()));
                         }
                     }
                     else if (adRule.ActiveDirectoryRights.ToString().Contains("WriteProp"))
@@ -542,7 +542,7 @@ namespace Get_RBCD
                             if (allSids.Contains(sid) && sid != computerSid)
                             {
                                 var objectSid = sidMapList.FirstOrDefault(o => o.ObjectSID == sid);
-                                rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, "WriteProp"));
+                                rbcdList.Add(new rbcd(objectSid.SamAccountName, objectSid.DomainName, hostname, adRule.ActiveDirectoryRights.ToString()));
                             }
                         }
                         
